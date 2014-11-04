@@ -1,0 +1,19 @@
+<launch>
+    <node name="pose_sensor" pkg="msf_updates" type="pose_sensor" clear_params="true" output="screen">
+            <remap from="msf_core/imu_state_input" to="imu0" />
+            <remap from="msf_updates/pose_with_covariance_input" to="/vslam/pose_world" />
+
+            <rosparam file="$(find msf_updates)/ptam_sensor_fix.yaml"/>
+    </node>
+
+
+  <node name="gateway_pose_with_covariance_stamped_msf" pkg="gateway_msg" type="gateway_pose_with_covariance_stamped.py" >
+    <remap from="input" to="msf_core/pose_after_update" />
+    <remap from="output" to="gateway/pose_stamped/msf" />
+    <remap from="path_output" to="gateway/path/msf" />
+  </node>
+
+
+
+
+</launch>
